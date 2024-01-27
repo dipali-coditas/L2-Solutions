@@ -1,0 +1,21 @@
+# Author: Dipali Dhanwade
+# Description: deletes the VM, input should be IP address 
+
+import google.cloud.compute as compute
+
+def delete_vm_by_ip(project, ip):
+  client = compute.InstancesClient()
+
+  for zone, instances in client.aggregated_list(project):  
+    for instance in instances:
+      if ip in (instance.network_ip, instance.internal_ip):
+        client.delete(project, zone.name, instance.name)  
+        print(f"Deleted {instance.name}")
+        return
+
+  print(f"{ip} not found")
+
+if __name__ == "__main__":
+  project = "project" 
+  ip = input("Enter VM IP: ")
+  delete_vm_by_ip(project, ip)
