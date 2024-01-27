@@ -1,0 +1,25 @@
+To run this code on GCP, only a few changes would be needed:
+
+Specify your GCP project ID:
+# project = "my-project-id"
+
+Authenticate
+When running locally, do:
+
+# gcloud auth application-default login
+
+Install dependencies
+Locally:
+# pip install google-cloud-compute
+
+On GCP services add requirements.txt:
+# google-cloud-compute
+
+Pass a valid VM IP address to delete
+
+So the only major changes needed are:
+
+Specify GCP project ID
+Authenticate your environment
+Install the google cloud compute library
+Provide a valid VM IP address to delete
