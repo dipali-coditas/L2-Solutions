@@ -1,0 +1,24 @@
+**Q: How can I set up an email alert in the Google Cloud Console GUI when someone opens my website from a specific IP address without using a load balancer?**
+
+1. **Configure Log-Based Metric:**
+   - **Step 1:** In the Google Cloud Console, navigate to "Logging."
+   - **Step 2:** Construct a filter based on your log structure. For Apache logs, it might be something like `resource.type="gce_instance" AND textPayload:"34.93.42.56"`.
+   - **Step 3:** Click "Create Metric," set a name for the metric, and create it.
+
+2. **Create an Alert Policy:**
+   - **Step 1:** In the Google Cloud Console, navigate to "Monitoring" > "Alerting."
+   - **Step 2:** Click "+ CREATE POLICY."
+   - **Step 3:** Set the "Condition" using "Metric Threshold" and choose the metric created earlier.
+   - **Step 4:** In the "Configuration" section, set up conditions and notification channels.
+   - **Step 5:** In "Notification channels," add an email channel.
+
+3. **Create a Notification Channel for Email:**
+   - **Step 1:** Go to "Monitoring" > "Notification channels."
+   - **Step 2:** Click "+ CREATE CHANNEL."
+   - **Step 3:** Choose "Email" as the type, enter your email address, and click "Add channel."
+
+4. **Test the Setup:**
+   - **Step 1:** Access your website from the specified IP address.
+   - **Step 2:** Monitor Cloud Monitoring for alerts and check your email for the alert.
+
+This setup uses Cloud Monitoring, Cloud Logging, and a log-based metric to trigger email alerts when an access log entry matches the specified criteria. Adjustments may be needed based on your specific log structure.

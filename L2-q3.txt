@@ -1,0 +1,90 @@
+Create a machine image of the instance and create Autoscaling group / VMSS, put all instances behind the Load Balancer, generate traffic and let the instances scale from 1 to 10, release the load and the instance should scale back to 1 ((This is in continuation to Create a virtual machine, install apache server, write a simple HelloWorld App in PHP, host the app on Apache on VM question))
+
+
+
+
+Certainly! If you want to use images instead of machine images for auto-scaling with a managed instance group, you can follow these modified steps:
+
+### 1. Create an Image:
+
+1. In the Google Cloud Console, go to "Compute Engine" > "VM instances."
+
+2. Find the VM instance you created earlier.
+
+3. In the row for your VM instance, click on the instance name.
+
+4. Click on the "Stop" button to stop the instance.
+
+5. After stopping the instance, click on the "Create Image" button.
+
+6. Set a name for the image and click "Create."
+
+### 2. Create an Instance Template:
+
+1. In the Google Cloud Console, go to "Compute Engine" > "Instance templates."
+
+2. Click on "+ CREATE INSTANCE TEMPLATE."
+
+3. Set a name for the template.
+
+4. In the "Boot disk" section, choose "Custom images" and select the image you created.
+
+5. Configure other settings as needed and click "Create."
+
+### 3. Create a Managed Instance Group:
+
+1. In the Google Cloud Console, go to "Compute Engine" > "Instance groups."
+
+2. Click on "+ CREATE INSTANCE GROUP."
+
+3. Set a name for the instance group.
+
+4. Choose "Unmanaged instance group" and click "Create."
+
+5. In the "Instances" tab, add instances using the existing VM instance you created earlier.
+
+### 4. Create a Load Balancer:
+
+1. In the Google Cloud Console, go to "Network services" > "Load balancing."
+
+2. Click on "+ CREATE LOAD BALANCER."
+
+3. Choose "HTTP(S) Load Balancing."
+
+4. Set a name for the load balancer.
+
+5. Configure backend services by choosing the managed instance group created earlier.
+
+6. Configure frontend services.
+
+7. Complete the load balancer setup and click "Create."
+
+### 5. Generate Traffic:
+
+1. Get the IP address of your load balancer from the "Load balancing" page.
+
+2. Open a web browser and access the IP address to generate traffic.
+
+### 6. Observe Auto-Scaling:
+
+1. In the Google Cloud Console, go to "Compute Engine" > "Instance groups."
+
+2. Click on the instance group you created.
+
+3. In the "Details" tab, you can see the number of instances.
+
+4. Monitor the "Instance count" as you generate traffic.
+
+### 7. Release Load:
+
+1. Stop generating traffic to the load balancer.
+
+2. Monitor the instance group and observe the auto-scaling behavior.
+
+### 8. Observe Scaling Back:
+
+1. After a period of no traffic, monitor the instance group.
+
+2. Observe that the number of instances scales back down to the minimum.
+
+This adjusted setup demonstrates the auto-scaling behavior of a managed instance group using images instead of machine images. Adjust the configurations based on your specific requirements.

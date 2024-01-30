@@ -1,0 +1,16 @@
+11.Create a HelloWorld HTML website, store and host it in most cost effective way on the cloud platform and serve it publically over HTTPS
+
+Solution:
+
+Github Link: https://github.com/dipali-coditas/hello-wolrd.git
+
+1. Create an instance install apache2 and jenkins on it 
+2. In vs code create index.html add code then create jenkins file 
+
+3. Create a pipeline project on jenkins 
+
+- pipeline script from SCM 
+- add github url and branch as */main
+
+4. Check ip of vm and see output of index.html instead of apche default page
+

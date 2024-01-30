@@ -1,0 +1,45 @@
+
+1.Snapshot the Disk:
+
+Go to the Google Cloud Console.
+Navigate to "Compute Engine" -> "Disks".
+Select the disk attached to your VM.
+Click on "Create Snapshot".
+Provide a snapshot name and description.
+Click "Create".
+
+2.Resize the Disk:
+
+Go to "Compute Engine" -> "Disks".
+Select the disk attached to your VM.
+Click "Edit".
+In the "Size (GB)" field, enter the new size for your disk.
+Click "Save".
+
+3.Resize the Partition:
+
+SSH into your VM.Resize the Partition:
+
+SSH into your VM. Install growpart:   
+
+$ sudo apt update
+$ sudo apt install cloud-utils
+
+4.Resize the partition. Replace /dev/sda1 with your actual partition:
+
+$ sudo growpart /dev/sda 1
+
+5.Resize the File System:
+
+Resize the file system. Replace /dev/sda1 with your actual partition.
+
+$ sudo resize2fs /dev/sda1
+
+6.Verify the Changes:
+
+Check the available disk space:
+
+$ df -h
+
+
+

@@ -1,0 +1,70 @@
+Creating a three-tier Virtual Private Cloud (VPC) in Google Cloud Platform (GCP) involves setting up three types of subnets: Public, Private, and Database. Each subnet has its own set of requirements and components. Below are the steps to create a simple three-tier VPC in GCP:
+
+### 1. Create a VPC Network:
+
+1. Open the [Google Cloud Console](https://console.cloud.google.com/).
+2. In the left-hand navigation pane, go to "VPC network" > "VPC networks."
+3. Click on "+ CREATE VPC NETWORK."
+4. Set a name for your VPC, specify the region, and choose "Custom" for the subnet creation mode.
+5. Click "Create."
+
+### 2. Create Subnets:
+
+#### Public Subnet:
+
+1. In the VPC network page, click on your newly created VPC.
+2. Click on "Add subnet."
+3. Set a name for the subnet (e.g., "public-subnet").
+4. Specify an IP range for the subnet (e.g., `10.0.1.0/24`).
+5. Select the region.
+6. Choose "Public subnet" for the purpose.
+7. Click "Create."
+
+#### Private Subnet:
+
+1. Repeat steps 2-7 for the private subnet with a different IP range (e.g., `10.0.2.0/24`) and name (e.g., "private-subnet").
+
+#### Database Subnet:
+
+1. Repeat steps 2-7 for the database subnet with a different IP range (e.g., `10.0.3.0/24`) and name (e.g., "database-subnet").
+
+### 3. Firewall Rules:
+
+#### For Public Subnet:
+
+1. In the VPC network page, click on "Firewall."
+2. Click on "+ CREATE FIREWALL RULE."
+3. Set a name (e.g., "allow-http").
+4. Specify the targets as "All instances in the network."
+5. Set the source IP ranges to `0.0.0.0/0` for public access.
+6. Choose "tcp:80" for the allowed protocols.
+7. Click "Create."
+
+#### For Private Subnet:
+
+1. Create firewall rules as needed for internal communication within your VPC.
+
+### 4. Create Compute Engine Instances:
+
+#### For Public Subnet:
+
+1. Go to "Compute Engine" > "VM instances."
+2. Click "Create instance."
+3. Choose the public subnet for the instance network.
+4. Set up the instance as needed.
+
+#### For Private Subnet:
+
+1. Repeat the steps for creating instances in the private subnet.
+
+#### For Database Subnet:
+
+1. Repeat the steps for creating instances in the database subnet.
+
+### 5. Test Connectivity:
+
+1. Access the public instance from the internet.
+2. Test communication between instances in the private subnet.
+3. Ensure the database instances can communicate within the database subnet.
+
+This creates a basic three-tier VPC in GCP with public, private, and database subnets. Adjust the IP ranges, firewall rules, and instance configurations based on your specific requirements.

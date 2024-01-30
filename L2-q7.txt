@@ -1,0 +1,25 @@
+Create virtual machine without SSH key and take SSH of the instance
+
+create instnace do ssh
+go to
+cd /etc/ssh/
+sudo ano sshd_config
+sudo systemctl restart ssh
+sudo useradd dipali
+sudo passwd dipali 
+
+-- add password for that user
+
+sudo visudo 
+
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+dipali ALL=(ALL:ALL) NOPASSWD:ALL
+
+-- ad this entry
+
+_ Go to command prompt add 
+
+ssh dipali@35.200.129.1
+give it a password 
+and done 

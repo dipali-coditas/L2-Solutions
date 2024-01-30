@@ -1,0 +1,108 @@
+Create a virtual machine, install apache server, write a simple HelloWorld App in PHP, host the app on Apache on VM, ship Apache logs to Azure Logging / AWS Cloudwatch
+
+- solution for GCP 
+1. Create vm 
+2. do ssh 
+
+sudo apt-get update
+sudo apt-get install apache2 -y
+cd /var/www/html/
+ls
+sudo rm index.html
+sudo touch index.html
+sudo chmod 777 index.html
+vi index.html
+
+esc + i
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+
+:wq
+
+3.http://34.93.42.56/ -> output : Hello, World!
+
+4. SSH
+
+sudo apt-get install wget
+sudo wget https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+sudo bash add-logging-agent-repo.sh --also-install
+sudo nano /etc/google-fluentd/config.d/apache.conf
+
+<source>
+  @type tail
+  format none
+  path /var/log/apache*/access.log,/var/log/apache*/access_log,/var/log/httpd/access.log
+  pos_file /var/lib/google-fluentd/pos/apache-access.pos
+  read_from_head true
+  tag apache-access
+</source>
+
+<source>
+  @type tail
+  format none
+  path /var/log/apache*/error.log,/var/log/apache*/error_log,/var/log/httpd/error.log
+  pos_file /var/lib/google-fluentd/pos/apache-error.pos
+  read_from_head true
+  tag apache-error
+</source>
+
+<match apache-access>
+  @type google_cloud
+  buffer_type file
+  buffer_path /var/lib/google-fluentd/buffers/apache-access.buffer
+  buffer_chunk_limit 2M
+  flush_interval 5s
+  max_retry_wait 30
+  disable_retry_limit
+  project_id project1-404008
+  log_id apache-access              --->log for access
+</match>
+
+<match apache-error>
+  @type google_cloud
+  buffer_type file
+  buffer_path /var/lib/google-fluentd/buffers/apache-error.buffer
+  buffer_chunk_limit 2M
+  flush_interval 5s
+  max_retry_wait 30
+  disable_retry_limit
+  project_id project1-404008
+  log_id apache-error              ----> log for error
+</match>
+
+sudo service google-fluentd restart
+
+5. To view logs with a specific log_id in the Google Cloud Console:
+
+Go to the Google Cloud Console.
+In the navigation menu, select "Logging" under "Operations."
+In the filter bar, you can enter the log_id to filter logs for a specific log type.
+This helps you organize and analyze logs more effectively, especially when you have multiple types of logs coming from different sources.
+
+Go to Logging :
+
+RESOURCE TYPE : VM Instance
+PROJECT ID : select id
+INSTANCE ID : select id
+LOG NAME : apache-access
+LOG NAME : apache-error 
+
+resource.type="gce_instance"
+resource.labels.instance_id="1817363234882304030"
+log_name="projects/project1-404008/logs/apache-error"
+
+resource.type="gce_instance"
+resource.labels.instance_id="1817363234882304030"
+log_name="projects/project1-404008/logs/apache-access"
+
+
+
+

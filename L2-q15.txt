@@ -1,0 +1,91 @@
+15.Create a simple application in programming / scripting language of your choice and host it in VM as a docker container, create loadbalancer and serve it over HTTPS
+
+1. Create on instance
+2. Do SSH
+
+    1  sudo apt-get update
+    2  sudo apt-get install apache2 -y
+    3  cd /var/www/html/
+    4  ls
+    5  sudo rm index.html
+    6  ls
+    7  sudo nano index.html
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>My First Web Page</title>
+
+</head>
+
+<body>
+
+<h1>Welcome to my site from Dipali</h1>
+
+<p>Hello Everyone!</p>
+
+</body>
+
+</html>
+
+
+
+    8  cd
+    9  sudo a2ensite default-ssl 
+       Enabling site default-ssl. 
+    10 sudo a2enmod ssl
+       Considering dependency setenvif for ssl:
+Module setenvif already enabled
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Enabling module socache_shmcb.
+Enabling module ssl.
+See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+     11 sudo systemctl restart apache2
+
+3.Take an external ip https://34.93.247.46/
+
+4.Create an instnace group 
+
+5.Create a load balancer
+
+select:
+
+- From Internet to my VMs or serverless services
+- Classic Application Load Balancer
+
+Frontend configuration:
+
+-Protocol
+HTTPS (includes HTTP/2)
+
+- select certificate which has key and certificate uploaded in it
+
+Backend configuration:
+
+- Create a backend service by selcting an instance group
+
+- port 80 
+
+- Create
+
+6. Go to load balancer
+
+- add instance to instance group, cross check the health check
+
+- Now take an IP of load balancer : 34.49.39.20:443
+
+- https://34.49.39.20/
+
+add with 'https' then slect options to proceed and voila
+
+output is : 
+
+Welcome to my site from Dipali
+Hello Everyone!
