@@ -1,0 +1,11 @@
+24.Write a python script which creates 5 VM's
+
+1. Go to the path where your file is located
+2. open git bash their
+3. commands to execute:
+
+$ gcloud auth login
+$ gcloud init
+$ gcloud compute instances list
+$ pyhton create_vms.py
+
